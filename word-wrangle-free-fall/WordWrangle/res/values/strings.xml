@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">WordWrangle</string>
+    <string name="lbl_sound">Sound</string>
+    <string name="Instruction">Instruction  </string>
+    <string name="scope">  1.   Player is expected to start from level one. \n2. You can not play the next level if you 
+      dont unlock the previous level by clicking on it. \n3. Click on the ALPHABET that makes up the word.  </string>
+    <string name="time_image">Time image</string>
+    <string name="time_image_1">Time Number 1</string>
+    <string name="time_image_2">Time Number 2</string>
+    <string name="time_image_3">Time Number 3</string>
+    <string name="title_activity_instructions_screen">InstructionsScreenActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+</resources>

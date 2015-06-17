@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    
+     <LinearLayout 
+        android:id="@+id/adholder"
+        android:orientation="horizontal"    
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:layout_alignParentBottom="true"/>
+    
+    <RelativeLayout 
+    	android:id="@+id/GameScreen_view_layout"
+    	android:layout_width="match_parent"
+    	android:layout_height="match_parent"
+    	android:layout_above="@id/adholder"
+    	android:background="@drawable/bg_game_screen">
+    	
+   		<ImageView android:id="@+id/time"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentTop="true"
+			android:layout_centerHorizontal="true"
+			android:layout_marginTop="5dp"
+			android:background="@drawable/time"
+			android:visibility="invisible"		
+			android:contentDescription="@string/time_image">
+		</ImageView>
+  	
+		<ImageView android:id="@+id/time_digit_one"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentTop="true"
+			android:layout_toRightOf="@id/time"
+			android:layout_marginTop="5dp"
+			android:contentDescription="@string/time_image_1">
+		</ImageView>
+	
+		<ImageView android:id="@+id/time_digit_two"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentTop="true"
+			android:layout_toRightOf="@id/time_digit_one"
+			android:layout_marginTop="5dp"
+			android:contentDescription="@string/time_image_2">
+		</ImageView>
+	
+		<ImageView android:id="@+id/time_digit_three"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_alignParentTop="true"
+			android:layout_toRightOf="@id/time_digit_two"
+			android:layout_marginTop="5dp"
+			android:contentDescription="@string/time_image_3">
+		</ImageView>
+	
+		<ImageView
+	    	android:id="@+id/countdown_im"
+	    	android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerInParent="true">
+		</ImageView>
+		
+		
+		<TextView
+		    android:id="@+id/selected_letters"
+		    android:layout_width="wrap_content"
+			android:layout_height="wrap_content" 
+		    android:layout_alignParentLeft="true"
+		    android:layout_alignParentBottom="true">
+		</TextView>
+	</RelativeLayout>
+	
+</RelativeLayout>

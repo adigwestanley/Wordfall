@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.google.ads.AdRequest"/>
+<fullyQualifiedTypeName name="com.google.ads.AdView"/>
+<fullyQualifiedTypeName name="com.google.ads.AdSize"/>
+<fullyQualifiedTypeName name="android.widget.LinearLayout"/>
+<fullyQualifiedTypeName name="android.widget.ImageView"/>
+<fullyQualifiedTypeName name="android.view.ViewGroup.LayoutParams"/>
+<fullyQualifiedTypeName name="android.graphics.Color"/>
+<fullyQualifiedTypeName name="com.lclass.wordwrangle.R.layout"/>
+<fullyQualifiedTypeName name="com.lclass.wordwrangle.R.color"/>
+<fullyQualifiedTypeName name="android.view.Gravity"/>
+<fullyQualifiedTypeName name="com.lclass.items.RandomItem"/>
+<fullyQualifiedTypeName name="android.content.Context"/>
+<fullyQualifiedTypeName name="com.lclass.common.Constants"/>
+<fullyQualifiedTypeName name="com.lclass.wordwrangle.R.drawable"/>
+<fullyQualifiedTypeName name="android.app.Activity"/>
+<fullyQualifiedTypeName name="android.os.Bundle"/>
+<fullyQualifiedTypeName name="android.view.View"/>
+<fullyQualifiedTypeName name="android.content.Intent"/>
+<fullyQualifiedTypeName name="com.lclass.wordwrangle.R.raw"/>
+<fullyQualifiedTypeName name="com.lclass.common.MusicKeys"/>
+<fullyQualifiedTypeName name="android.widget.TextView"/>
+<fullyQualifiedTypeName name="com.lclass.wordwrangle.R.id"/>
+<fullyQualifiedTypeName name="android.graphics.Typeface"/>
+<fullyQualifiedTypeName name="com.lclass.actor.Level"/>
+<fullyQualifiedTypeName name="com.lclass.common.SoundFX"/>
+</qualifiedTypeNameHistroy>

@@ -1,0 +1,12 @@
+package com.lclass.wordwrangle;
+
+import android.app.Activity;
+import android.os.Bundle;
+
+public class GameScreenActivity extends Activity{
+
+	@Override
+	 protected void onCreate(Bundle savedInstanceState) {
+	    //setContentView(R.layout.home_screen);
+	 }
+}

@@ -1,0 +1,14 @@
+package com.lclass.common;
+
+public interface MusicKeys {
+
+	public static final String GAME_OVER_LOSS = "TUBA";
+	public static final String GAME_OVER_WIN = "SUCCESS";
+
+	public static final String BEEP = "BEEP";
+	public static final String COUNTDOWN_BEEP = "COUNTDOWN_BEEP";
+	public static final String COUNTDOWN_OVER = "COUNTDOWN_OVER_BEEP";
+	
+	public static final String ERROR = "ERROR_SOUND";
+
+}

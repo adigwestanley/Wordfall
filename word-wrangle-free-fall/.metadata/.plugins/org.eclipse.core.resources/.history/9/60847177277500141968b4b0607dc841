@@ -1,0 +1,11 @@
+package com.lclass.wordwrangle;
+
+import android.os.Bundle;
+
+public class MenuScreenActivity extends Activity{
+
+	@Override
+	 protected void onCreate(Bundle savedInstanceState) {
+	    //setContentView(R.layout.home_screen);
+	 }
+}

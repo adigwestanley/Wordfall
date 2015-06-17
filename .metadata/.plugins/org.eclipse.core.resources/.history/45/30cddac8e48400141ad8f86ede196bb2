@@ -1,0 +1,52 @@
+package com.lclass.common;
+
+import java.util.HashMap;
+
+import com.lclass.common.Constants;
+
+import android.content.Context;
+import android.media.AudioManager;
+import android.media.SoundPool;
+
+public class SoundFX {
+
+	private static final int MAX_STREAMS = 4;
+	private boolean isReleased;
+
+	private Context context;
+	private SoundPool soundPool;
+	private AudioManager audioManager;
+	private HashMap<String, Integer> soundPoolMap;
+	
+	public void initSounds(Context context) {
+		this.context = context;
+		this.isReleased = false;
+		this.soundPoolMap = new HashMap<String, Integer>();
+		this.soundPool = new SoundPool(MAX_STREAMS, AudioManager.STREAM_MUSIC, 0);
+		this.audioManager = (AudioManager)context.getSystemService(Context.AUDIO_SERVICE);
+	}
+
+	public void addSound(String soundKey, int soundID) {
+		this.soundPoolMap.put(soundKey, soundPool.load(context, soundID, 1));
+	}
+
+	public void playSound(String soundKey, int volumeSetting) {
+		if (Constants.SETTING_VOLUME_ON == volumeSetting) {
+			float streamVolume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+			streamVolume = streamVolume / audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+			this.soundPool.play(soundPoolMap.get(soundKey), streamVolume, streamVolume, 1, 0, 1f);
+		}
+	}
+
+	public void stop(String soundKey) {
+		this.soundPool.stop(soundPoolMap.get(soundKey));
+	}
+
+	public void release() {
+		if (!isReleased) {
+			this.soundPool.release();
+			this.isReleased = true;
+		}
+	}
+
+}

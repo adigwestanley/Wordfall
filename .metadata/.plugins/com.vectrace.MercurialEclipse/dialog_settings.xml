@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="CommitDialog">
+		<item value="599" key="DIALOG_WIDTH"/>
+		<item value="0" key="DIALOG_Y_ORIGIN"/>
+		<item value="713" key="DIALOG_HEIGHT"/>
+		<item value="341" key="DIALOG_X_ORIGIN"/>
+		<item value="1|.Helvetica Neue DeskInterface|11.0|0|COCOA|1|.HelveticaNeueDeskInterface-Regular" key="DIALOG_FONT_NAME"/>
+	</section>
+	<section name="com.vectrace.MercurialEclipse.wizards.PushRepoWizard">
+		<list key="ConfigurationWizardMainPage.STORE_USERNAME_ID">
+			<item value="mossman25"/>
+		</list>
+	</section>
+	<section name="MercurialParticipantSynchronizeWizard">
+	</section>
+	<section name="com.vectrace.MercurialEclipse.wizards.CloneRepoWizard">
+		<list key="ConfigurationWizardMainPage.STORE_USERNAME_ID">
+			<item value="mossman25"/>
+		</list>
+	</section>
+</section>

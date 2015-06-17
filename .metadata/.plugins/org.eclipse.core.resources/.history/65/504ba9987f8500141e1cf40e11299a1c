@@ -1,0 +1,59 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" 
+    android:background="@drawable/bg_level_select_screen"
+    android:orientation="vertical">
+
+     <LinearLayout 
+        android:id="@+id/adholder"
+        android:orientation="horizontal"    
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+     
+    <ScrollView
+            android:layout_width="fill_parent"
+       		android:layout_height="0dp"
+        	android:layout_weight="0.85" >
+        
+    	<LinearLayout
+    	    android:id="@+id/layout_level_select"
+       		android:layout_width="fill_parent"
+       		android:layout_height="wrap_content"
+        	android:baselineAligned="false"
+        	android:orientation="vertical"
+        	android:padding="5dp" />
+     
+     </ScrollView>			
+     			
+     <RelativeLayout 
+         android:layout_width="fill_parent"
+         android:layout_height="0dp"
+         android:layout_weight="0.15">
+        	
+    	<TextView
+       		android:id="@+id/textView1"
+        	android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+        	android:layout_marginBottom="10dp"
+        	android:layout_marginLeft="5dp"
+        	android:textSize="@dimen/fonts_small"
+        	android:textColor="#000">
+        
+    	</TextView>
+
+    	<ImageButton
+        	android:id="@+id/go_button"
+        	android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+        	android:layout_marginRight="5dp"
+        	android:layout_marginBottom="10dp"
+        	android:src="@drawable/countdown_go"
+        	android:background="@null"/>
+     </RelativeLayout>	
+     
+   
+</LinearLayout>

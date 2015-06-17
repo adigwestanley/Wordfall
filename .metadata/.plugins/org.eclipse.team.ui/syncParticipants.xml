@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<syncparticipants>
+<participant displayName="[https://bitbucket.org/mossman25/delete-me] " id="com.vectrace.MercurialEclipse.synchronize.MercurialSynchronizeParticipant" secondary_id="[https://bitbucket.org/mossman25/delete-me] ">
+<data root="false">
+<com.vectrace.MercurialEclipse.synchronize.MercurialSynchronizeParticipant>
+<location root="/Users/josephmoscatiello/Documents/adroid_app/Wordfall/delete-me" uri="https://bitbucket.org/mossman25/delete-me"/>
+</com.vectrace.MercurialEclipse.synchronize.MercurialSynchronizeParticipant>
+<org.eclipse.team.ui.MODEL_PARTICIPANT_SETTINGS startupAction="none">
+<org.eclipse.team.ui.MODEL_PARTICIPANT_REFRESH_SCHEDULE org.eclipse.team.ui.CTX_REFRESHSCHEDULE_ENABLED="false" org.eclipse.team.ui.CTX_REFRESHSCHEDULE_INTERVAL="3600" org.eclipse.team.ui.CTX_REFRESHSCHEDULE_RUNONCE="false"/>
+</org.eclipse.team.ui.MODEL_PARTICIPANT_SETTINGS>
+</data>
+</participant>
+</syncparticipants>

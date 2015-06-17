@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move 4 elements to &apos;WordWrangle/src/com.lclass.wordwrangle&apos;&#x0A;- Original project: &apos;WordWrangle&apos;&#x0A;- Destination element: &apos;WordWrangle/src/com.lclass.wordwrangle&apos;&#x0A;- Original elements:&#x0A;     SplashScreenActivity.java&#x0A;     GameOverActivity.java&#x0A;     GameScreenActivity.java&#x0A;     MenuScreenActivity.java&#x0A;- Update references to refactored element" description="Move compilation units" destination="/src&lt;com.lclass.wordwrangle" element1="/src&lt;{SplashScreenActivity.java" element2="/src&lt;{GameOverActivity.java" element3="/src&lt;{GameScreenActivity.java" element4="/src&lt;{MenuScreenActivity.java" files="0" flags="589830" folders="0" id="org.eclipse.jdt.ui.move" policy="org.eclipse.jdt.ui.moveResources" qualified="false" references="true" stamp="1416963509641" units="4" version="1.0"/>
+</session>

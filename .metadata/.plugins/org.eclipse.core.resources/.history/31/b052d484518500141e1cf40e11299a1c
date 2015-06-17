@@ -1,0 +1,11 @@
+package org.scrambledbeans.common;
+
+public interface MusicKeys {
+
+	public static final String POP = "POP";
+	public static final String BUZZ = "BUZZ";
+
+	public static final String BEEP = "BEEP";
+	public static final String COUNTDOWN_BEEP = "COUNTDOWN_BEEP";
+
+}

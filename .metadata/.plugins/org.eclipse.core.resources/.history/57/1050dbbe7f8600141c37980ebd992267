@@ -1,0 +1,300 @@
+package com.lclass.wordwrangle;
+
+import com.google.ads.AdRequest;
+import com.google.ads.AdSize;
+import com.google.ads.AdView;
+import com.lclass.actor.Level;
+import com.lclass.common.Constants;
+import com.lclass.common.MusicKeys;
+import com.lclass.common.SoundFX;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Typeface;
+import android.os.Bundle;
+import android.os.Handler;
+import android.util.DisplayMetrics;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+public class GameScreenActivity extends Activity{
+	
+	RelativeLayout relativeLayout;
+	GameScreenDrawView dv;
+	private Handler mHandler;
+	
+	DisplayMetrics dm;
+    String targetWord;
+    int level;
+    int numMoves;
+    
+    private SoundFX sound;
+    private Typeface cartoonFont;
+    
+    //countdown/ time
+    public int time;
+    private ImageView timeDigitOneView;
+	private ImageView timeDigitTwoView;
+	private ImageView timeDigitThreeView;
+	private ImageView timeImage;
+	private TextView selectedLettersTV;
+	private TextView movesTV;
+	
+	private int countdownValue;
+	private ImageView countdownValueView;
+	
+	private Boolean isPaused = false;
+	private Boolean countDownComplete = false;
+	
+	private Level levelInfo;
+	DatabaseHandler db;
+	
+	//ads
+	public LinearLayout adHolder;
+	
+	@Override
+	 protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+	    setContentView(R.layout.layout_gamescreen);
+	     
+	    time = 30;
+	    this.timeImage = (ImageView) findViewById(R.id.time);
+	    this.timeDigitOneView = (ImageView) findViewById(R.id.time_digit_one);
+		this.timeDigitTwoView = (ImageView) findViewById(R.id.time_digit_two);
+		this.timeDigitThreeView = (ImageView) findViewById(R.id.time_digit_three);
+		this.countdownValueView = (ImageView) findViewById(R.id.countdown_im);
+		this.countdownValue = Constants.COUNTDOWN_FROM_VALUE;
+		this.cartoonFont = Typeface.createFromAsset(this.getAssets(), Constants.CARTOON_FONT); 
+		this.selectedLettersTV = (TextView) findViewById(R.id.selected_letters_tv);
+		this.movesTV = (TextView) findViewById(R.id.moves_tv);
+		this.selectedLettersTV.setTypeface(cartoonFont);
+		this.movesTV.setTypeface(cartoonFont);
+		
+		 //ads
+	    adHolder = (LinearLayout) findViewById (R.id.adholder);
+	    AdRequest adreq=new AdRequest();
+	    AdView adView = new AdView(this, AdSize.SMART_BANNER, Constants.PUBLISHER_ID);
+	    adHolder.addView(adView);
+	    adView.loadAd(adreq);
+		
+	    //get length height of screen
+		dm = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(dm);
+		
+		 //pull routine number from bundle
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+        	level = extras.getInt("LEVEL");
+        }
+		
+        //get the level info from database
+        db = new DatabaseHandler(this);
+		try{
+			db.createDataBase();
+			db.openDataBase();
+		}catch(Exception e){}
+		this.levelInfo = db.getSingleLevel(level);
+	 	this.db.close();
+        this.numMoves = levelInfo.getNumMoves();
+        this.targetWord = levelInfo.getWord();
+	 	
+	 	
+		//begin counter thread
+        setMovesLeftText(numMoves);
+        this.sound = new SoundFX();
+        initializeSounds();
+		mHandler = new Handler();
+		this.countdownRunnable.run();
+	 }
+	
+	public void onCountDownComplete(){
+		this.countDownComplete = true;
+		this.countdownValueView.setVisibility(View.GONE);
+		this.timeImage.setVisibility(View.VISIBLE);
+		this.movesTV.setVisibility(View.VISIBLE);
+		dv = new GameScreenDrawView(this, dm, targetWord, level, numMoves);
+		relativeLayout = (RelativeLayout) findViewById(R.id.GameScreen_view_layout);
+		relativeLayout.addView(dv);
+		this.timerRunnable.run();
+		
+	}
+
+	protected Runnable timerRunnable = new Runnable() {
+		public void run() {
+			//if (allWordsHaveNotBeenFound()) {
+			if(!(isPaused)){
+				if (time >= 0) {
+					System.out.println("TIME: " + time);
+					updateTime();
+					mHandler.postDelayed(this, 1000);
+				}
+				else {
+					queueGameOver(Constants.GAME_OVER_TIME);
+				}
+			}
+	    }
+    };
+    
+    protected Runnable gameOverRunnable = new Runnable() {
+		public void run() {
+			Intent resultsScreenIntent = new Intent(GameScreenActivity.this, GameOverActivity.class);
+			resultsScreenIntent.putExtra("LEVEL", level);
+			resultsScreenIntent.putExtra("TARGET_WORD", dv.getTargetWord());
+			resultsScreenIntent.putExtra("OBTAINED_LETTERS", dv.getTouchedString());
+			startActivity(resultsScreenIntent);
+			finish();
+			overridePendingTransition(R.anim.translate_up_onscreen, R.anim.translate_up_offscreen);
+		}
+    };
+    
+    public void queueGameOver(int gameOverMethod)
+    {
+    	mHandler.removeCallbacks(timerRunnable);
+    	ImageView timeUpImage = new ImageView(this);
+    	if(gameOverMethod == Constants.GAME_OVER_NO_MOVES_LEFT)
+    	{
+    		timeUpImage.setImageResource(R.drawable.no_more_moves);
+    		sound.playSound(MusicKeys.GAME_OVER_LOSS, 0);
+    	}
+    	else if(gameOverMethod == Constants.GAME_OVER_SUCCESS)
+    	{
+    		timeUpImage.setImageResource(R.drawable.text_awesome);
+    		sound.playSound(MusicKeys.GAME_OVER_WIN, 0);
+    	}
+    	else{
+    		timeUpImage.setImageResource(R.drawable.time_up);
+    		sound.playSound(MusicKeys.GAME_OVER_LOSS, 0);
+    	}
+    	
+    	RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+    	params.addRule(RelativeLayout.CENTER_IN_PARENT);
+    	timeUpImage.setLayoutParams(params);
+    	dv.setVisibility(View.GONE);
+    	relativeLayout.addView(timeUpImage);
+    	this.selectedLettersTV.setVisibility(View.INVISIBLE);
+    	this.movesTV.setVisibility(View.INVISIBLE);
+    	timeImage.setVisibility(View.INVISIBLE);
+    	timeDigitOneView.setVisibility(View.INVISIBLE);
+    	timeDigitTwoView.setVisibility(View.INVISIBLE);
+    	timeDigitThreeView.setVisibility(View.INVISIBLE);
+    	mHandler.postDelayed(gameOverRunnable, 3000);
+    }
+    
+    protected Runnable countdownRunnable = new Runnable() {
+		public void run() {
+			switch (countdownValue) {
+			case 4:
+				sound.playSound(MusicKeys.COUNTDOWN_BEEP, 0);
+				countdownValueView.setImageResource(R.drawable.countdown_3);
+				countdownValue--;
+				mHandler.postDelayed(this, 1000);
+				break;
+			case 3:
+				sound.playSound(MusicKeys.COUNTDOWN_BEEP, 0);
+				countdownValueView.setImageResource(R.drawable.countdown_2);
+				countdownValue--;
+				mHandler.postDelayed(this, 1000);
+				break;
+			case 2:
+				sound.playSound(MusicKeys.COUNTDOWN_BEEP, 0);
+				countdownValueView.setImageResource(R.drawable.countdown_1);
+				countdownValue--;
+				mHandler.postDelayed(this, 1000);
+				break;
+			case 1:
+				sound.playSound(MusicKeys.COUNTDOWN_BEEP, 0);
+				countdownValueView.setImageResource(R.drawable.countdown_go);
+				countdownValue--;
+				mHandler.postDelayed(this, 1000);
+				break;
+			case 0:
+				sound.playSound(MusicKeys.COUNTDOWN_OVER, 0);
+			    onCountDownComplete();
+			    mHandler.removeCallbacks(this);
+				break;
+			default:
+				break;
+			}
+		}
+	};
+    
+    private void updateTime() {
+		char[] timeString = Integer.toString(time).toCharArray();
+		System.out.print("Time 1 = " + timeString[0]);
+		if (timeString.length == 1) {
+			this.timeDigitOneView.setImageResource(Constants.selectNumberCharacter(timeString[0]));
+			this.timeDigitTwoView.setVisibility(View.GONE);
+			this.timeDigitTwoView.setVisibility(View.GONE);
+		} else if (timeString.length == 2) {
+			this.timeDigitOneView.setImageResource(Constants.selectNumberCharacter(timeString[0]));
+			this.timeDigitTwoView.setImageResource(Constants.selectNumberCharacter(timeString[1]));
+			this.timeDigitThreeView.setVisibility(View.GONE);
+		} else {
+			this.timeDigitOneView.setImageResource(Constants.selectNumberCharacter(timeString[0]));
+			this.timeDigitTwoView.setImageResource(Constants.selectNumberCharacter(timeString[1]));
+			this.timeDigitThreeView.setImageResource(Constants.selectNumberCharacter(timeString[2]));
+		}
+		this.time--;
+	}
+    
+    public void increaseTime()
+	{
+    	sound.playSound(MusicKeys.PLUS_TIME, 0);
+		this.time+= 5;
+	}
+    
+    public void decreaseTime()
+	{
+    	sound.playSound(MusicKeys.MINUS_TIME, 0);
+		this.time-= 5;
+	}
+    
+    private void initializeSounds() {
+		this.sound.initSounds(getApplicationContext());
+		this.sound.addSound(MusicKeys.GAME_OVER_WIN, R.raw.game_over_win);
+		this.sound.addSound(MusicKeys.GAME_OVER_LOSS, R.raw.game_over_lose);
+		this.sound.addSound(MusicKeys.COUNTDOWN_BEEP, R.raw.sound_countdown_beep);
+		this.sound.addSound(MusicKeys.COUNTDOWN_OVER, R.raw.sound_pop);
+		this.sound.addSound(MusicKeys.MINUS_TIME, R.raw.time_minus);
+		this.sound.addSound(MusicKeys.PLUS_TIME, R.raw.time_plus);
+	}
+    
+    
+    public void setMovesLeftText(int moves)
+    {
+    	movesTV.setText("Moves: " + moves);
+    }
+    
+    public void setSeletedLettersText(String let)
+    {
+    	selectedLettersTV.setText(let);
+    }
+    
+    @Override
+	protected void onPause() {
+		this.isPaused = true;
+		if (this.countDownComplete) {
+			this.mHandler.removeCallbacks(timerRunnable);
+		} else {
+			this.mHandler.removeCallbacks(countdownRunnable);
+		}
+		super.onPause();
+	}
+    
+    @Override
+	protected void onRestart() {
+    	this.isPaused = false;
+		if (this.countDownComplete) {
+				this.mHandler.postDelayed(timerRunnable, 500);
+		} else {
+			this.countdownValue = Constants.COUNTDOWN_FROM_VALUE;
+			this.mHandler.postDelayed(countdownRunnable, 500);
+		}
+		super.onRestart();
+	}
+		
+
+}
